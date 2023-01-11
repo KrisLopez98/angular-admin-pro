@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styles: [
-  ]
+  styles: [],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
+  constructor(private usuarioService: UsuarioService, private router: Router) { }
 
-  constructor() { }
+  logout(): void {
+    this.usuarioService.logout();
 
-  ngOnInit(): void {
   }
-
 }
