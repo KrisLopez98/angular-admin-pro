@@ -3,12 +3,13 @@ import {
   Component,
   ElementRef,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UsuarioService } from '../../services/usuario.service';
+import { NgZone } from '@angular/core';
 
 declare const google: any;
 
@@ -32,10 +33,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private usuarioService: UsuarioService
-  ) { }
+    private usuarioService: UsuarioService,
+    private ngZone: NgZone
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.googleInit();
@@ -55,10 +57,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   handleCredentialResponse(response: any) {
+    console.log('encoded jwt ', response.credential);
     this.usuarioService
       .loginGoogle(response.credential)
       .subscribe((response) => {
-        this.router.navigateByUrl('/');
+        console.log(response);
+        localStorage.setItem('emailGoogle', response.email);
+        this.ngZone.run(() => {
+          this.router.navigateByUrl('/');
+        });
       });
   }
 
@@ -71,12 +78,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
           localStorage.removeItem('email');
         }
         console.log(response);
-        this.router.navigateByUrl('/');
+        this.ngZone.run(() => {
+          this.router.navigateByUrl('/');
+        });
       },
       (error) => {
         Swal.fire('Error', error.error.msg, 'error');
       }
     );
   }
-
 }
