@@ -10,8 +10,21 @@
   cursor: pointer;
 }
 
-
 .img-avatar {
   width: 200px;
   height: auto;
+}
+
+.w100 {
+  width: 100px;
+}
+
+.w150 {
+  width: 150px;
+}
+
+.avatar {
+  width: 60px;
+  border-radius: 100%;
+  border: 1px solid #e9ecef;
 }
