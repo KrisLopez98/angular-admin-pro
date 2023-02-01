@@ -13,7 +13,8 @@ import { ProgressComponent } from './progress/progress.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { MedicoComponent } from './mantenimientos/medicos/medico.component';
-
+import { BusquedasComponent } from './busquedas/busquedas.component';
+import { AdmiGuard } from '../guards/admi.guard';
 
 const routes: Routes = [
   {
@@ -21,25 +22,72 @@ const routes: Routes = [
     component: PagesComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', component: DashboardComponent, data: { titulo: 'Dashboard' } },
-      { path: 'progress', component: ProgressComponent, data: { titulo: 'Progress' } },
-      { path: 'grafica1', component: Grafica1Component, data: { titulo: ' Gráfica #1' } },
-      { path: 'account-settings', component: AccountSettingComponent, data: { titulo: 'Ajustes de cuenta' } },
-      { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
+      {
+        path: '',
+        component: DashboardComponent,
+        data: { titulo: 'Dashboard' },
+      },
+      {
+        path: 'account-settings',
+        component: AccountSettingComponent,
+        data: { titulo: 'Ajustes de cuenta' },
+      },
+      {
+        path: 'busqueda/:termino',
+        component: BusquedasComponent,
+        data: { titulo: 'Búsquedas' },
+      },
+      {
+        path: 'grafica1',
+        component: Grafica1Component,
+        data: { titulo: ' Gráfica #1' },
+      },
+      {
+        path: 'progress',
+        component: ProgressComponent,
+        data: { titulo: 'Progress' },
+      },
+      {
+        path: 'promesas',
+        component: PromesasComponent,
+        data: { titulo: 'Promesas' },
+      },
+      {
+        path: 'perfil',
+        component: PerfilComponent,
+        data: { titulo: 'Perfil de usuario' },
+      },
       { path: 'rxjs', component: RxjsComponent, data: { titulo: 'RxJs' } },
-      { path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil de usuario' } },
 
       // Mantenimientos
-      { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
-      { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Mantenimiento de Hospitales' } },
-      { path: 'medicos', component: MedicosComponent, data: { titulo: 'Mantenimiento de Médicos' } },
-      { path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Mantenimiento de Médico' } }
-    ]
+      {
+        path: 'hospitales',
+        component: HospitalesComponent,
+        data: { titulo: 'Mantenimiento de Hospitales' },
+      },
+      {
+        path: 'medicos',
+        component: MedicosComponent,
+        data: { titulo: 'Mantenimiento de Médicos' },
+      },
+      {
+        path: 'medico/:id',
+        component: MedicoComponent,
+        data: { titulo: 'Mantenimiento de Médico' },
+      },
+      // RUTAS DE ADMI
+      {
+        path: 'usuarios',
+        canActivate: [AdmiGuard],
+        component: UsuariosComponent,
+        data: { titulo: 'Mantenimiento de Usuarios' },
+      },
+    ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PagesRoutingModule { }
+export class PagesRoutingModule {}

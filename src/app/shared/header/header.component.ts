@@ -11,8 +11,11 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class HeaderComponent implements OnInit {
   usuario!: Usuario;
-  constructor(private usuarioService: UsuarioService, private router: Router, private sanitizer: DomSanitizer) { }
-
+  constructor(
+    private usuarioService: UsuarioService,
+    private router: Router,
+    private sanitizer: DomSanitizer
+  ) { }
 
   ngOnInit(): void {
     this.usuario = this.usuarioService.usuario!;
@@ -20,5 +23,14 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     this.usuarioService.logout();
+  }
+
+  buscar(termino: string) {
+    if (termino.length === 0) {
+      this.router.navigateByUrl('/dashboard');
+      console.log('----> redirect to', termino);
+    }
+    console.log('----> termino de busqueda', termino);
+    this.router.navigateByUrl(`/dashboard/busqueda/${termino}`)
   }
 }
